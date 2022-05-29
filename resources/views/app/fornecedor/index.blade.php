@@ -32,9 +32,10 @@
 @else
     <h3> Não existem fornecedor Cadastrado.
 @endif --}}
-
-@isset($fornecedor)
-    Fornecedor : {{ $fornecedor[0]['nome'] }}<br>
+{{-- esse são alguns comandos
+    @isset($fornecedor)
+    Fornecedor : {{ $fornecedor[0]['nome'] }}
+    <br>
     Status: {{ $fornecedor[0]['status'] }}
     @isset($fornecedor[0]['cnpj'])
         CNPJ : {{ $fornecedor[0]['cnpj'] }}
@@ -51,4 +52,32 @@
     @unless($fornecedor[0]['status'] == 'S')
         Fornecedor inativo
     @endunless
+@endisset --}}
+
+{{-- comando switch case --}}
+
+@isset($fornecedor)
+    Fonecedor : {{ $fornecedor[1]['nome'] }}
+    <br>
+    Status: {{ $fornecedor[1]['status'] }}
+    <br>
+    CNPJ : {{ $fornecedor[1]['cnpj'] ?? '' }}
+    <br>
+    Telefone : ({{ $fornecedor[1]['ddd'] ?? '' }}) {{ $fonecedor[1]['telefone'] ?? '' }}
+    @switch($fornecedor[1]['ddd'])
+        @case('11')
+            São Paulo - SP
+        @break
+
+        @case('32')
+            Juiz de Fora - MG
+        @break
+
+        @case('85')
+            Fortaleza - CE
+        @break
+
+        @default
+            Estado não identificado
+    @endswitch
 @endisset
