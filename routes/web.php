@@ -56,7 +56,7 @@ Route::get('/contato/{nome}/{categoria_id}', function(
 
 Route::get('/', 'PrincipalController@principal')->name('site.index');
 
-Route::get('/sobre-nos', 'SpbreNosController@sobrenos')->name('site.sobrenos');
+Route::get('/sobrenos', 'SpbreNosController@sobrenos')->name('site.sobrenos');
 
 Route::get('/contato', 'ContatoController@contato')->name('site.contato');
 

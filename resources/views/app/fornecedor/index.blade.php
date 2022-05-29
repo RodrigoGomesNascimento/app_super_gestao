@@ -56,15 +56,7 @@
 
 {{-- comando switch case --}}
 
-@isset($fornecedor)
-    Fonecedor : {{ $fornecedor[1]['nome'] }}
-    <br>
-    Status: {{ $fornecedor[1]['status'] }}
-    <br>
-    CNPJ : {{ $fornecedor[1]['cnpj'] ?? '' }}
-    <br>
-    Telefone : ({{ $fornecedor[1]['ddd'] ?? '' }}) {{ $fonecedor[1]['telefone'] ?? '' }}
-    @switch($fornecedor[1]['ddd'])
+{{-- COMO USAR O  @switch($fornecedor[1]['ddd'])
         @case('11')
             São Paulo - SP
         @break
@@ -80,4 +72,68 @@
         @default
             Estado não identificado
     @endswitch
+@endisset --}}
+
+{{-- @php $i = 0 @endphp
+    @while (isset($fornecedor[$i]))
+        Fonecedor : {{ $fornecedor[$i]['nome'] }}
+        <br>
+        Status: {{ $fornecedor[$i]['status'] }}
+        <br>
+        CNPJ : {{ $fornecedor[$i]['cnpj'] ?? 'Não declarado' }}
+        <br>
+        Telefone : ({{ $fornecedor[$i]['ddd'] ?? '' }}) {{ $fonecedor[$i]['telefone'] ?? '' }}
+        <hr>
+        @php $i++ @endphp
+    @endwhile  @dd($loop) mostra os atributos do objeto. --}}
+
+@isset($fornecedor)
+
+
+    @forelse ($fornecedor as $indice => $fornecedores)
+        Iteração atual = {{ $loop->iteration }}
+        <br>
+        Fonecedor : {{ $fornecedores['nome'] }}
+        <br>
+        Status: {{ $fornecedores['status'] }}
+        <br>
+        CNPJ : {{ $fornecedores['cnpj'] ?? 'Não declarado' }}
+        <br>
+        Telefone : ({{ $fornecedores['ddd'] ?? '' }}) {{ $fornecedores['telefone'] ?? '' }}
+        <hr>
+        <br>
+        @if ($loop->first)
+            Primeira iteração do loop.
+        @endif
+
+        @if ($loop->last)
+            Úlitma iteração do loop.
+
+            <br>
+            Total de registro : {{ $loop->count }}
+        @endif
+        <hr>
+    @empty
+        Não existem fornecedores cadastrados!!
+    @endforelse
+    {{-- @for ($i = 0; isset($fornecedor[$i]); $i++)
+        Fonecedor : {{ $fornecedor[$i]['nome'] }}
+        <br>
+        Status: {{ $fornecedor[$i]['status'] }}
+        <br>
+        CNPJ : {{ $fornecedor[$i]['cnpj'] ?? 'Não declarado' }}
+        <br>
+        Telefone : ({{ $fornecedor[$i]['ddd'] ?? '' }}) {{ $fonecedor[$i]['telefone'] ?? '' }}
+        <hr>
+    @endfor
+     @foreach ($fornecedor as $indice => $fornecedores)
+        Fonecedor : {{ $fornecedores['nome'] }}
+        <br>
+        Status: {{ $fornecedores['status'] }}
+        <br>
+        CNPJ : {{ $fornecedores['cnpj'] ?? 'Não declarado' }}
+        <br>
+        Telefone : ({{ $fornecedores['ddd'] ?? '' }}) {{ $fornecedores['telefone'] ?? '' }}
+        <hr>
+    @endforeach --}}
 @endisset
