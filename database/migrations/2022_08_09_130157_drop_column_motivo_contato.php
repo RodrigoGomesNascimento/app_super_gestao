@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFornecedoresTable extends Migration
+class DropColumnMotivoContato extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateFornecedoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('fornecedores', function (Blueprint $table) {
-            $table->id();
-            $table->string('nome', 50);
-            $table->timestamps();
-            //$table->softDeletes();
+        Schema::table('site_contatos', function (Blueprint $table) {
+            $table->dropColumn('motivo_contato');
         });
     }
 
@@ -28,6 +25,9 @@ class CreateFornecedoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fornecedores');
+        //
+        Schema::table('site_contatos', function (Blueprint $table) {
+            $table->integer('motivo_contato');
+        });
     }
 }
