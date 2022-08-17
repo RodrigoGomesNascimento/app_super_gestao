@@ -20,15 +20,19 @@ class LogAcessoMiddleware
 
         //response - manipular.
        // dd($request);
-        // para recuperar o ip, precisamos criar uma variável, onde terar o atributo server do request e o metodo get para apresentar o artibuto que fica o ip
+        // para recuperar o ip, precisamos criar uma variável, onde tera o atributo server do request e o metodo get para apresentar o artibuto que fica o ip
         $ip = $request->server->get('REMOTE_ADDR');
         //teve que ajustar para o padrão camelcase.
         $rota= $request->getRequestUri();
 
         //para poder interpolar sem concatenar tem que mudar aspas simples para duplas.
         LogAcesso::create(['log' => "$ip , requisitou a rota $rota."]);
-        return $next($request);
+        //return $next($request);
         //return response('Chegamos no middleware e finalizamo no proprio middleware.');
+        $resposta = $next($request);
 
+        //$resposta->setStatusCode(201, 'O status da resposta foi alterado!!');
+        //dd($resposta);
+        return $resposta;
     }
 }
