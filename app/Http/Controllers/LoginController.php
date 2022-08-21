@@ -15,6 +15,9 @@ class LoginController extends Controller
         if($request->get('erro') == 1){
             $erro = 'Usuário e/ou senha inválido!';
         } ;
+        if($request->get('erro') == 2){
+            $erro = 'Necessário realizar login para acesso a pagina';
+        } ;
 
         return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);//tem que passar o parametro titulo se não dá erro
     }
@@ -40,17 +43,29 @@ class LoginController extends Controller
 
        $email = $request->get('usuario');
        $password = $request->get('senha');
-
+       /*
        echo "Usuário: $email | Senha: $password";
        echo '<br>';
-
+       */
        //iniciar o model User
        $user = new User();
 
        $usuario = $user->where('email', $email)->where('password', $password)->get()->first();// metodo first() retorna o primeiro registro do array get()
 
        if(isset($usuario->name)){
-        echo "Usuario existe";
+        //echo "Usuario existe";
+        //dd($usuario);//para ver os atributos.
+
+        //iniciar a super global session para verificar se o usuario está logado
+
+        session_start();
+        $_SESSION['nome'] = $usuario->name;
+        $_SESSION['email'] = $usuario->email;
+        //dd($_SESSION);
+
+        //redirecionar para as paginas onde são necessário o login
+        return redirect()->route('app.home');
+
        }else{
         //echo "Usuario não existe.";
         return redirect()->route('site.login', ['erro' => 1]);
@@ -63,4 +78,9 @@ class LoginController extends Controller
 
     }
 
+    public function sair(){
+        //echo "sair";
+        session_destroy();//destroi a section onde e redireciona para a pagina inicial.
+        return redirect()->route('site.index');
+    }
 }

@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 class FornecedorController extends Controller
 {
-    public function index(){
+
+     public function index(){
+        return view('app.fornecedor');
+    }
+
+
+    /*public function index(){
         $fornecedor = [
             0=>['nome'=>'Fornecedor 1',
             'status' =>'N',
@@ -33,10 +39,11 @@ class FornecedorController extends Controller
          * Condição ? se verdade : (condição ? se verdade : se falso);
          *
          */
-        echo isset($fornecedor[0]['cnpj']) ? 'CNPJ informado' : 'CNPJ não informado';
+        /*echo isset($fornecedor[0]['cnpj']) ? 'CNPJ informado' : 'CNPJ não informado';
 
         $msg = isset($fornecedor[0]['cnpj']) ? 'CNPJ informado' : 'CNPJ não informado';
         echo ' <br>', $msg;
         return view('app.fornecedor.index', compact('fornecedor'));
-    }
+    } */
+
 }

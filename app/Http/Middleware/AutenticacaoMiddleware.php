@@ -15,6 +15,7 @@ class AutenticacaoMiddleware
      */
     public function handle($request, Closure $next, $metodo_autenticacao, $perfil)
     {
+       /*//codigo de exemplo aula
         echo $metodo_autenticacao. ' - '. $perfil . '<br>';
 
         if($metodo_autenticacao == 'padrao')
@@ -38,6 +39,14 @@ class AutenticacaoMiddleware
         }
 
        // return $next($request);
+        */
 
+        session_start();
+
+        if(isset($_SESSION['email']) && $_SESSION['email'] != ''){
+            return $next($request);
+        }else{
+            return redirect()->route('site.login', ['erro' => 2]);
+        }
     }
 }
