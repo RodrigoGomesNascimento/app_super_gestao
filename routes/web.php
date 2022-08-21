@@ -65,7 +65,7 @@ Route::get('/contato', 'ContatoController@contato')->name('site.contato');
 Route::post('/contato', 'ContatoController@salvar')->name('site.contato');
 //abaixo o sera utilizado uma funcao de calback para imprimir o formulario de login.
 //Route::get('/login', function(){return 'Login';})->name('site.login');
-Route::get('/login', 'LoginController@index')->name('site.login');
+Route::get('/login/{erro?}', 'LoginController@index')->name('site.login');
 Route::post('/login', 'LoginController@autenticar')->name('site.login');
 
 Route::middleware('autenticacao:ldap,visitante')->prefix('/app')->group(function(){
