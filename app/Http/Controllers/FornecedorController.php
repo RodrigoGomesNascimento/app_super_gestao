@@ -3,14 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Fornecedores;
 
 class FornecedorController extends Controller
 {
 
-     public function index(){
-        return view('app.fornecedor');
+    public function index(){
+        return view('app.fornecedor.index');
     }
 
+    public function listar(){
+        return view('app.fornecedor.listar');
+    }
+
+    public function adicionar(Request $request){
+
+        //mensagem de sucesso
+        $msg = '';//tem que ser iniciada antes do if
+
+        //print_r($request->all());
+
+       //validando com o token para entrar na tela de cadastro
+
+       if($request->input('_token') != ''){
+        //echo 'Cadastro';
+
+
+
+            $regras = [
+                'nome' => 'required|min:3|max:40',
+                'site' => 'required',
+                'uf' => 'required|min:2|max:2',
+                'email' => 'email',
+            ];
+            $feedback = [
+                'required' => ' O Campo :attribute deve ser preenchido',//o :atrribute recupera o campo
+                'nome.min' => 'O campo nome dever ter no mínimo 3 caracters',
+                'nome.max' => 'O campo nome dever ter no máximo 40 caracters',
+                'uf.min' => 'O campo uf dever ter no mínimo 3 caracters',
+                'uf.max' => 'O campo uf dever ter no máximo 40 caracters',
+                'email.email' => 'O campo e-mail não foi preenchido corretamente'
+
+            ];
+
+            $request->validate($regras, $feedback);
+
+            $fornecedor = new Fornecedores();
+            $fornecedor->create($request->all());
+
+            //$msg = 'Cadastro realizado com sucesso';
+            //echo 'Chegamos';
+
+            $msg = 'Cadastro realizado com sucesso';
+
+       }
+
+        return view('app.fornecedor.adicionar', ['msg' => $msg]);
+    }
 
     /*public function index(){
         $fornecedor = [
