@@ -27,7 +27,15 @@ class LoginController extends Controller
 
        $request->validate($regras, $feedback);
 
-       print_r($request->all());
+       //recebendo os dados do formulario.
+
+
+       $email = $request->get('usuario');
+       $password = $request->get('senha');
+
+       echo "Usuário: $email | Senha: $password";
+       echo '<br>';
+       //print_r($request->all());
 
     }
 
