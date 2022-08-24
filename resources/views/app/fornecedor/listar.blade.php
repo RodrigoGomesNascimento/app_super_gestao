@@ -18,8 +18,37 @@
     </div>
 
     <div class="informacao-pagina">
-        .......Lista...........
+        <div style="width: 90%; margin-left: auto; margin-right: auto;">
+            <table border="" width="100%">
+
+                <thead>
+                    <tr>
+                        <th>Nome </th>
+                        <th>Site </th>
+                        <th>UF </th>
+                        <th>E-mail </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                    <tbody>
+
+                        @foreach ($fornecedor as $fornecedores )
+
+                            <tr>
+                                <td>{{ $fornecedores->nome}}</td>
+                                <td>{{ $fornecedores->site}}</td>
+                                <td>{{ $fornecedores->uf}}</td>
+                                <td>{{ $fornecedores->email}}</td>
+                                <td>Excluir</td>
+                                <td>Editar</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+            </table>
         </div>
+
     </div>
 
 </div>
