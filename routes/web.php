@@ -1,5 +1,6 @@
 <?php
 
+use App\Fornecedores;
 use App\Http\Controllers\ContatoControler;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\LogAcessoMiddleware;
@@ -76,8 +77,10 @@ Route::middleware('autenticacao:ldap,visitante')->prefix('/app')->group(function
     Route::get('/fornecedor', 'FornecedorController@index')->name('app.fornecedor');
 
     Route::post('/fornecedor/listar', 'FornecedorController@listar')->name('app.fornecedor.listar');
+    Route::get('/fornecedor/listar', 'FornecedorController@listar')->name('app.fornecedor.listar');//foi necessario criar uma via get para paginação.
     Route::get('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
     Route::post('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
+    Route::get('/fornecedor/editar/{id}/{msg?}', 'FornecedorController@editar')->name('app.fornecedor.editar');//id é obrigatorio por isso não tem o ?
 
     Route::get('/produto', 'ProdutoController@index')->name('app.produto');
 });

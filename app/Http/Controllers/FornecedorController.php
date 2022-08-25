@@ -20,10 +20,10 @@ class FornecedorController extends Controller
                                     ->where('site', 'like','%'.$request->input('site').'%')
                                     ->where('uf', 'like','%'.$request->input('uf').'%')
                                     ->where('email', 'like','%'.$request->input('email').'%')
-                                    ->get();
+                                    ->paginate(2);//paginação substitui o meto get() por paginate com parametro
         //dd($fornecedor);
 
-        return view('app.fornecedor.listar', ['fornecedor' => $fornecedor]);//esse últmo é o parametro que será passado para a view.
+        return view('app.fornecedor.listar', ['fornecedor' => $fornecedor, 'request' => $request->all()]);//esse últmo é o parametro que será passado para a view.
     }
 
     public function adicionar(Request $request){
@@ -33,12 +33,11 @@ class FornecedorController extends Controller
 
         //print_r($request->all());
 
-       //validando com o token para entrar na tela de cadastro
 
-       if($request->input('_token') != ''){
+       //validando com o token para entrar na tela de cadastro e adicionar cadastro
+
+       if( $request->input('_token') != '' && $request->input('id') == ''){
         //echo 'Cadastro';
-
-
 
             $regras = [
                 'nome' => 'required|min:3|max:40',
@@ -68,8 +67,32 @@ class FornecedorController extends Controller
 
        }
 
-        return view('app.fornecedor.adicionar', ['msg' => $msg]);
-    }
+       //edição
+       if($request->input('_token') != '' && $request->input('id') != ''){
+        //echo 'Cadastro';
+
+            $fornecedor = Fornecedores::find($request->input('id'));
+            $update = $fornecedor->update($request->all());
+
+            if($update) {
+                $msg = 'Atualização realizada com sucesso';
+            }else{
+                $msg = 'Erro na atualização';
+            }
+            return redirect()->route('app.fornecedor.editar', ['id' => $request->input('id'),'msg' => $msg]);
+       }
+
+            return view('app.fornecedor.adicionar', ['msg' => $msg] );
+
+        }
+        public function editar($id, $msg = ''){
+           // echo "'Chegamos até aqui' $id";
+           $fornecedor = Fornecedores::find($id);
+
+           //dd($fornecedor);
+
+        return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor, 'msg' => $msg] );
+        }
 
     /*public function index(){
         $fornecedor = [
