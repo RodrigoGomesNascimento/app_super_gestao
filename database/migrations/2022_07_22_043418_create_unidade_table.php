@@ -13,26 +13,26 @@ class CreateUnidadeTable extends Migration
      */
     public function up()
     {
-        Schema::create('unidade', function (Blueprint $table) {
+       /* Schema::create('unidade', function (Blueprint $table) {
             $table->id();
             $table->string('inidade', 5);//cm, mm, kg
             $table->string('descricao', 30);
             $table->timestamps();
 
-        });
+        });*/
 
         //adicionar o relacionamento com a tabela produtos, poderia ser feito uma nova migration, mas pode ser aqui
 
         Schema::table('produto', function(Blueprint $table){
-            $table->unsignedBigInteger('unidade_id');
-            $table->foreign('unidade_id')->references('id')->on('unidade');
+          //  $table->unsignedBigInteger('unidade_id');
+           // $table->foreign('unidade_id')->references('id')->on('unidades');
             });
 
 
         //adicionar o relacionamento para muitos na tabela produto_detalhes
-        Schema::table('prduto_detales', function(Blueprint $table){
-            $table->unsignedBigInteger('unidade_id');
-            $table->foreign('unidade_id')->references('id')->on('unidade');
+        Schema::table('produtos_detalhes', function(Blueprint $table){
+            //$table->unsignedBigInteger('unidade_id');
+           // $table->foreign('unidade_id')->references('id')->on('unidades');
         });
     }
 
@@ -46,16 +46,16 @@ class CreateUnidadeTable extends Migration
         //remover o que foi feito
             //tem que ser de tras para frente
             //primerio a foregein
-            Schema::table('prduto_detales', function(Blueprint $table){
-            $table->dropForeign('prdruto_detales_unidade_id_foreign');//nome ordem por convenção [table]_[coluna]_[foreign]
+            Schema::table('produtos_detalhes', function(Blueprint $table){
+            $table->dropForeign('produtos_detalhes_unidade_id_foreign');//nome ordem por convenção [table]_[coluna]_[foreign]
             //remover a coluna
             $table->dropColumn('unidade_id');
         });
          //remover o que foi feito
             //tem que ser de tras para frente
             //primerio a foregein
-            Schema::table('prduto', function(Blueprint $table){
-            $table->dropForeign('prdruto_unidade_id_foreing');//nome ordem por convenção [table]_[coluna]_[foreign]
+            Schema::table('produto', function(Blueprint $table){
+            $table->dropForeign('produto_unidade_id_foreing');//nome ordem por convenção [table]_[coluna]_[foreign]
             //remover a coluna
             $table->dropColumn('unidade_id');
         });

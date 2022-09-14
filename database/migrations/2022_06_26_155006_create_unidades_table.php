@@ -13,12 +13,12 @@ class CreateUnidadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('unidades', function (Blueprint $table) {
+       /* Schema::create('unidades', function (Blueprint $table) {
             $table->id();
             $table->string('unidade', 5);//cm, mm, kg
             $table->string('descricao', 30);//qual é a unidade.
             $table->timestamps();
-        });
+        });*/
 
         //adicionar o relaciomento com a tabela produtos
         Schema::table('produto', function(Blueprint $table) {

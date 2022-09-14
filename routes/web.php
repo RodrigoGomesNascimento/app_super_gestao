@@ -81,8 +81,12 @@ Route::middleware('autenticacao:ldap,visitante')->prefix('/app')->group(function
     Route::get('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
     Route::post('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
     Route::get('/fornecedor/editar/{id}/{msg?}', 'FornecedorController@editar')->name('app.fornecedor.editar');//id é obrigatorio por isso não tem o ?
+    Route::get('/fornecedor/excluir/{id}}', 'FornecedorController@excluir')->name('app.fornecedor.excluir');//id é obrigatorio por isso não tem o ?
+//produtos
 
-    Route::get('/produto', 'ProdutoController@index')->name('app.produto');
+   // Route::get('/produto', 'ProdutoController@index')->name('app.produto');
+   //como usou o metodo resource para criar o controller pode se unificar tudo com esse método.
+   Route::resource('produto', 'ProdutoController');
 });
 
 Route::fallback(function() {

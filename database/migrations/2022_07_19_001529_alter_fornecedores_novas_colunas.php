@@ -15,8 +15,8 @@ class AlterFornecedoresNovasColunas extends Migration
     {
         //O método table seleciona a tabela.
          Schema::table('fornecedores', function (Blueprint $table) {
-            $table->string('uf', 2);
-            $table->string('email', 150);
+           // $table->string('uf', 2);
+           // $table->string('email', 150);
 
         });
     }

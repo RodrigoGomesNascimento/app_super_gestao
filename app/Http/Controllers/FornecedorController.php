@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Fornecedores;
+use PhpParser\Node\Stmt\Echo_;
 
 class FornecedorController extends Controller
 {
@@ -92,6 +93,20 @@ class FornecedorController extends Controller
            //dd($fornecedor);
 
         return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor, 'msg' => $msg] );
+        }
+
+        //função para remover
+
+        public function excluir($id){
+            //echo "Remover $id";
+            //da forma abaixo como na classe está implementado o softdelete ele fica apenas inativo.
+            Fornecedores::find($id)->delete();
+
+            //se quisar apagar realmente do banco de dados tem que ser da forma abaixo
+
+           // Fornecedores::find($id)->forceDelete();
+
+            return redirect()->route('app.fornecedor');
         }
 
     /*public function index(){
