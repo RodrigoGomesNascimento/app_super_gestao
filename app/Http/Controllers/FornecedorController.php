@@ -17,11 +17,11 @@ class FornecedorController extends Controller
         //dd($request->all());
 
         //busca por varios parametros.
-        $fornecedor = Fornecedores::where('nome', 'like','%'.$request->input('nome').'%')
+        $fornecedor = Fornecedores::with(['produtos'])->where('nome', 'like','%'.$request->input('nome').'%')
                                     ->where('site', 'like','%'.$request->input('site').'%')
                                     ->where('uf', 'like','%'.$request->input('uf').'%')
                                     ->where('email', 'like','%'.$request->input('email').'%')
-                                    ->paginate(2);//paginação substitui o meto get() por paginate com parametro
+                                    ->paginate(5);//paginação substitui o meto get() por paginate com parametro
         //dd($fornecedor);
 
         return view('app.fornecedor.listar', ['fornecedor' => $fornecedor, 'request' => $request->all()]);//esse últmo é o parametro que será passado para a view.

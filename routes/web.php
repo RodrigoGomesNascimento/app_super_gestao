@@ -87,6 +87,10 @@ Route::middleware('autenticacao:ldap,visitante')->prefix('/app')->group(function
     //Route::get('/produto', 'ProdutoController@index')->name('app.produto');
    //como usou o metodo resource para criar o controller pode se unificar tudo com esse método.
    Route::resource('produto', 'ProdutoController');
+
+   // produto detalhe
+
+   Route::resource('produto-detalhe', 'ProdutoDetalheController');
 });
 
 Route::fallback(function() {

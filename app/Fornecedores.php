@@ -15,4 +15,8 @@ class Fornecedores extends Model
     //método estático não precisa da instancia para ser executado no caso não tem que ficar criando objeto.
     protected $fillable = ['nome', 'site', 'uf','email'];
 
+    public function produtos(){
+        return $this->hasMany('App\Item', 'fornecedor_id','id');
+    }
+
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Produto extends Model
+class Item extends Model
 {
     //
 
@@ -16,11 +16,15 @@ class Produto extends Model
 
     //relacionamento hasone um para um
 
-    public function produtoDetalhe(){
-        return $this->hasOne('App\ProdutoDetalhe');
+    public function itemDetalhe(){
+        return $this->hasOne('App\ItemDetalhe', 'produto_id', 'id');//não vai usar a convenção de nome.
 
         /*Produto tem 1 produtoDetalhe
         1 registro relacionado em  produto_detalhes (fk) -> produto_id
         produtos (pk) ->id */
+    }
+
+    public function fornecedor() {
+        return $this->belongsTo('App\Fornecedores');
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
 use App\Produto;
+use App\ProdutoDetalhe;
 use App\Unidade;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,29 @@ class ProdutoController extends Controller
     {
         //
 
-        $produto = Produto::paginate(10);
+        $produto = Item::with(['ItemDetalhe', 'fornecedor'])->paginate(10);
+
+
+
+        /*
+        foreach ($produto as $key => $produtos) {
+            # code...
+           // print_r($produtos->getAttributes());
+            //echo '<br><br>';
+            $produtoDetalhe = ProdutoDetalhe::where('produto_id', $produtos->id)->first();
+
+            //sem o first estaria recuperando uma colletion
+            //com o first eu recupera apenas um registro por isso pode usar o getAttributes.
+            if(isset($produtoDetalhe)){
+                print_r($produtoDetalhe->getAttributes());
+
+                $produto[$key]['comprimento'] = $produtoDetalhe->comprimento;
+                $produto[$key]['largura'] = $produtoDetalhe->largura;
+                $produto[$key]['altura'] = $produtoDetalhe->altura;
+            }
+            //echo '<hr>';
+        }
+        */
 
         return view('app.produto.index', ['produto' => $produto, 'request' => $request->all()]);
 
