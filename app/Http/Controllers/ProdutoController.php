@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Fornecedores;
 use App\Item;
 use App\Produto;
 use App\ProdutoDetalhe;
@@ -57,8 +58,9 @@ class ProdutoController extends Controller
     {
         //
         $unidades = Unidade::all();//recuperar o dados e mandar para view como segundo parametro
+        $fornecedores = Fornecedores::all();
 
-        return view('app.produto.create', ['unidades' => $unidades]);
+        return view('app.produto.create', ['unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -76,7 +78,8 @@ class ProdutoController extends Controller
             'nome' => 'required|min:3|max:40',
             'descricao' => 'required|min:3|max:2000',
             'peso' => 'required|integer',
-            'unidade_id' => 'exists:unidades,id'//exist tem dois parametros tabela e coluna.
+            'unidade_id' => 'exists:unidades,id',//exist tem dois parametros tabela e coluna.
+            'fornecedor_id' => 'exists:fornecedores,id'
 
         ];
 
@@ -89,14 +92,15 @@ class ProdutoController extends Controller
             'descricao.min'=> 'O campo descricao deve ter no mínimo 3 caracteres',
             'descricao.max'=> 'O campo descricao deve ter no máximo 2000 caracteres',
             'peso.integer' => 'Somente numeros inteiros',
-            'unidade_id.exists' => 'A unidade de medida informada não existe'
+            'unidade_id.exists' => 'A unidade de medida informada não existe',
+            'fornecedor_id.exists' => 'Fornecedor não existe'
 
         ];
 
         $request->validate($regra, $feedback);
         //este metodo já é criado através do resourse e normalmente não implementa uma view e já vem com o request
 
-        Produto::create($request->all());//dessa forma pode ser feita pq foi configurada a model para receber dados de modo massivo.
+        Item::create($request->all());//dessa forma pode ser feita pq foi configurada a model para receber dados de modo massivo.
         /*
             outra forma é a debaixo ótima para tratar campos antes de salvar.
            $produto = new Produto();
@@ -148,7 +152,9 @@ class ProdutoController extends Controller
     {
         //está tipado pra receber um produto.
         $unidades = Unidade::all();
-        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
+        $fornecedores = Fornecedores::all();
+
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades, 'fornecedores' => $fornecedores]);
         //return view('app.produto.create', ['produto' => $produto, 'unidades' => $unidades]);
     }
 
@@ -157,16 +163,43 @@ class ProdutoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Produto  $produto
+     *  @param  \App\Item  $produto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, Item $produto)
     {
+
+              $regra = [
+            'nome' => 'required|min:3|max:40',
+            'descricao' => 'required|min:3|max:2000',
+            'peso' => 'required|integer',
+            'unidade_id' => 'exists:unidades,id',//exist tem dois parametros tabela e coluna.
+            'fornecedor_id' => 'exists:fornecedores,id'
+
+        ];
+
+        //construtor das mensagens de feedback para o usuário
+
+        $feedback = [
+            'required' => 'O campo  :attribute deve ser preenchido',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+            'nome.max' => 'O campo nome deve ter no máximo 40 caracteres',
+            'descricao.min'=> 'O campo descricao deve ter no mínimo 3 caracteres',
+            'descricao.max'=> 'O campo descricao deve ter no máximo 2000 caracteres',
+            'peso.integer' => 'Somente numeros inteiros',
+            'unidade_id.exists' => 'A unidade de medida informada não existe',
+            'fornecedor_id.exists' => 'Fornecedor não cadastrado'
+
+        ];
+
+        $request->validate($regra, $feedback);
+
         //
         /*
         print_r($request->all()); //payload
         echo '<br><br><br>';
         print_r($produto->getAttributes());//Instancia do objeto no estado anterior.*/
-
+        //dd($request->all());
         $produto->update($request->all());
         return redirect()->route('produto.show', ['produto' => $produto->id]);
     }

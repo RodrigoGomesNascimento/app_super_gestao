@@ -12,7 +12,7 @@ class Item extends Model
 
     protected $table = 'produto';
 
-    protected $fillable = ['nome', 'descricao', 'peso', 'unidade_id'];
+    protected $fillable = ['nome', 'descricao', 'peso', 'unidade_id', 'fornecedor_id'];
 
     //relacionamento hasone um para um
 
