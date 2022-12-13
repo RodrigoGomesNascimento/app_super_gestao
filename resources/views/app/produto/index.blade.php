@@ -65,20 +65,31 @@
                                 </td>
                                 <td><a href="{{ route('produto.edit', ['produto' => $produtos->id]) }}">Editar</a></td>
                             </tr>
+                            <th>
+                            <td colspan="12">
+                                <p>Pedido(s)</p>
+                                @foreach ($produtos->pedidos as $pedido)
+                                    <a href="{{ route('pedido-produto.create', ['pedido' => $pedido->id]) }}">
+                                        Pedido: {{ $pedido->id }},
+                                    </a>
+                                @endforeach
+                            </td>
+                            </th>
                         @endforeach
+
                     </tbody>
 
                 </table>
                 {{ $produto->appends($request)->links() }}
                 <br>
                 <!--
-                        <br>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $produto->total() }} - Total de registro da consulta.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <br>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $produto->firstItem() }} - Número do primeiro registro da página.(não é o id)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <br>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $produto->lastItem() }} - Número do ultimo registro da página.(ultimo na posição)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            -->
+                                                                                                                        <br>
+                                                                                                                        {{ $produto->total() }} - Total de registro da consulta.
+                                                                                                                        <br>
+                                                                                                                        {{ $produto->firstItem() }} - Número do primeiro registro da página.(não é o id)
+                                                                                                                        <br>
+                                                                                                                        {{ $produto->lastItem() }} - Número do ultimo registro da página.(ultimo na posição)
+                                                                                                                        -->
                 <br>
                 Exibindo {{ $produto->count() }} produtos de {{ $produto->total() }}. Começando de
                 {{ $produto->firstItem() }} a {{ $produto->lastItem() }}

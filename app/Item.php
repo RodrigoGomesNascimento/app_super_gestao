@@ -27,4 +27,13 @@ class Item extends Model
     public function fornecedor() {
         return $this->belongsTo('App\Fornecedores');
     }
+    //para mostrar os pedidos na tela da relação de produto na view index
+
+    public function pedidos() {
+        return $this->belongsToMany('App\Pedido', 'pedido_produtos', 'produto_id', 'pedido_id');
+    }
+    /*
+        3 - Representa o nome da FK da tabela mapeada pelo model na tabela de relacionamento.
+        4 - Representa o da FK da tabela mapeada pelo model utilizado no relacionamento que estamos implementando.
+    */
 }

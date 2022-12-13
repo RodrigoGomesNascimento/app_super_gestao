@@ -57,11 +57,11 @@
                 {{ $clientes->appends($request)->links() }}
                 <br>
                 <!--    <br>
-                        {{ $clientes->total() }} - Total de registro da consulta.
-                           <br>
-                           {{ $clientes->firstItem() }} - Número do primeiro registro da página.(não é o id
-                            <br>
-                               {{ $clientes->lastItem() }} - Número do ultimo registro da página.(ultimo na posição)-->
+                                {{ $clientes->total() }} - Total de registro da consulta.
+                                   <br>
+                                   {{ $clientes->firstItem() }} - Número do primeiro registro da página.(não é o id
+                                    <br>
+                                       {{ $clientes->lastItem() }} - Número do ultimo registro da página.(ultimo na posição)-->
                 <br>
                 Exibindo {{ $clientes->count() }} clientes de {{ $clientes->total() }}. Começando de
                 {{ $clientes->firstItem() }} a {{ $clientes->lastItem() }}

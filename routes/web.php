@@ -96,7 +96,13 @@ Route::middleware('autenticacao:ldap,visitante')->prefix('/app')->group(function
 
    Route::resource('cliente', 'ClienteController');
    Route::resource('pedido', 'PedidoController');
-   Route::resource('pedido_produto', 'PedidoProdutoController');
+  // Route::resource('pedido_produto', 'PedidoProdutoController');//vai precisar ser customizada pois ira precisar do produto e do pedido passado por parametro.
+
+    Route::get('pedido_produto/create/{pedido}', 'PedidoProdutoController@create')->name('pedido-produto.create');
+    Route::post('pedido_produto/store/{pedido}', 'PedidoProdutoController@store')->name('pedido-produto.store');
+    //Route::delete('pedido_produto.destroy/{pedido}/{produto}', 'PedidoProdutoController@destroy')->name('pedido-produto.destroy');
+    Route::delete('pedido_produto.destroy/{pedidoProduto}/{pedido_id}', 'PedidoProdutoController@destroy')->name('pedido-produto.destroy');
+
 });
 
 Route::fallback(function() {

@@ -1,6 +1,6 @@
 @extends('app.layouts.basico')
 
-@section('titulo', 'Clientes')
+@section('titulo', 'Pedidos')
 
 @section('conteudo')
 
@@ -12,20 +12,21 @@
 @else
     <p>Adicionar - Cliente</p>
     @endif-->
-            <p>Adicionar - Clientes</p>
+            <p>Adicionar - Pedidos</p>
         </div>
 
 
         <div class="menu">
             <ul>
-                <li><a href="{{ route('cliente.create') }}">Novo</a></li>
-                <li><a href="{{ route('cliente.index') }}">Voltar</a></li>
+                <li><a href="{{ route('pedido.create') }}">Novo</a></li>
+                <li><a href="{{ route('pedido.index') }}">Voltar</a></li>
             </ul>
         </div>
 
         <div class="informacao-pagina">
             <div style="width: 30%; margin-left: auto; margin-right: auto;">
-                @component('app.cliente._components.form_create_edit')
+
+                @component('app.pedido._components.form_create_edit', ['clientes' => $clientes])
                 @endcomponent
             </div>
         </div>
